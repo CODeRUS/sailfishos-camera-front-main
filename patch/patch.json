@@ -1,0 +1,8 @@
+{
+    "name": "Camera device at front",
+    "description": "Move camera device to front and hide exposure settings to overlay",
+    "category": "camera",
+    "infos": {
+        "maintainer": "coderus"
+    }
+}

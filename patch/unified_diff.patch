@@ -1,0 +1,54 @@
+commit 6b0ea2636c2edf2275e5a7fc5d67c4fe8a5d9b41
+Author: CODeRUS <coderusinbox@gmail.com>
+Date:   Mon Feb 2 20:19:37 2015 +0500
+
+    Move exposure to settings overlay and camera to front
+
+diff --git a/usr/share/jolla-camera/pages/settings/ExposureMenu.qml b/usr/share/jolla-camera/pages/settings/ExposureMenu.qml
+index b668c00..185020e 100644
+--- a/usr/share/jolla-camera/pages/settings/ExposureMenu.qml
++++ b/usr/share/jolla-camera/pages/settings/ExposureMenu.qml
+@@ -4,13 +4,12 @@ import Sailfish.Silica 1.0
+ import com.jolla.camera 1.0
+ 
+ ExpandingMenu {
+-    //% "Exposure compensation"
+-    title: qsTrId("jolla-camera-la-exposure_compensation")
+-    model: Settings.mode.exposureCompensationValues
++    title: Settings.cameraText
++    model: [ "primary", "secondary" ]
+     delegate: ExpandingMenuItem {
+-        settings: Settings.mode
+-        property: "exposureCompensation"
++        settings: Settings.global
++        property: "cameraDevice"
+         value: modelData
+-        icon: Settings.exposureIcon(modelData)
++        icon: Settings.cameraIcon(modelData)
+     }
+ }
+diff --git a/usr/share/jolla-camera/pages/settings/SettingsOverlay.qml b/usr/share/jolla-camera/pages/settings/SettingsOverlay.qml
+index c9757d4..a2d4f47 100644
+--- a/usr/share/jolla-camera/pages/settings/SettingsOverlay.qml
++++ b/usr/share/jolla-camera/pages/settings/SettingsOverlay.qml
+@@ -427,14 +427,15 @@ PinchArea {
+             SettingsMenu {
+                 id: cameraDeviceMenu
+                 width: overlay._menuWidth
+-                title: Settings.cameraText
++                //% "Exposure compensation"
++                title: qsTrId("jolla-camera-la-exposure_compensation")
+                 header: overlay.isPortrait ? lowerHeader : upperHeader
+-                model: [ "primary", "secondary" ]
++                model: Settings.mode.exposureCompensationValues
+                 delegate: SettingsMenuItem {
+-                    settings: Settings.global
+-                    property: "cameraDevice"
++                    settings: Settings.mode
++                    property: "exposureCompensation"
+                     value: modelData
+-                    icon: Settings.cameraIcon(modelData)
++                    icon: Settings.exposureIcon(modelData)
+                 }
+             }
+         }
